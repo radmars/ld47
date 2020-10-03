@@ -8,6 +8,8 @@ public class TrackPlayback : MonoBehaviour {
 
     public AudioSource audioSource;
 
+    public StaticWaveformDisplay staticWaveform;
+
     private int currentClip = 0;
 
     // Start is called before the first frame update
@@ -26,6 +28,8 @@ public class TrackPlayback : MonoBehaviour {
 
     private void PlayClip(int clip) {
         currentClip = clip;
+
+        staticWaveform.SetClip(clips[currentClip]);
         float clipTime = audioSource.time;
         audioSource.Stop();
         audioSource.clip = clips[currentClip];
