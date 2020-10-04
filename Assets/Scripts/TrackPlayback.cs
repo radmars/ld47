@@ -15,19 +15,24 @@ public class TrackPlayback : MonoBehaviour {
 
     private int currentClip = 0;
 
+    bool selected = false;
+
     // Start is called before the first frame update
     void Start() {
         PlayClip(0);
         correctStaticWaveform.SetClip(correctClip);
         correctScrollingWaveform.SetClip(correctClip);
+        SetSelected(false);
     }
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-            PlayClip(currentClip == 0 ? clips.Length - 1 : currentClip - 1);
-        } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-            PlayClip(currentClip == clips.Length - 1 ? 0 : currentClip + 1);
+        if (selected) {
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+                PlayClip(currentClip == 0 ? clips.Length - 1 : currentClip - 1);
+            } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+                PlayClip(currentClip == clips.Length - 1 ? 0 : currentClip + 1);
+            }
         }
 
         currentScrollingWaveform.updateTexture(audioSource.timeSamples);
@@ -44,5 +49,13 @@ public class TrackPlayback : MonoBehaviour {
         audioSource.clip = clips[currentClip];
         audioSource.time = clipTime;
         audioSource.Play();
+    }
+
+    public void SetSelected(bool s) {
+        selected = s;
+        currentStaticWaveform.waveformRenderer.enabled = s;
+        currentScrollingWaveform.waveformRenderer.enabled = s;
+        correctStaticWaveform.waveformRenderer.enabled = s;
+        correctScrollingWaveform.waveformRenderer.enabled = s;
     }
 }
