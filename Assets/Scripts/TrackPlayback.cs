@@ -9,6 +9,7 @@ public class TrackPlayback : MonoBehaviour {
     public AudioSource audioSource;
 
     public StaticWaveformDisplay staticWaveform;
+    public ScrollingWaveformDisplay scrollingWaveform;
 
     private int currentClip = 0;
 
@@ -27,13 +28,14 @@ public class TrackPlayback : MonoBehaviour {
             PlayClip(currentClip == clips.Length - 1 ? 0 : currentClip + 1);
         }
 
-        //staticWaveform.updateTexture(audioSource.time, numVisibleSamples);
+        scrollingWaveform.updateTexture(audioSource.timeSamples);
     }
 
     private void PlayClip(int clip) {
         currentClip = clip;
 
         staticWaveform.SetClip(clips[currentClip]);
+        scrollingWaveform.SetClip(clips[currentClip]);
         float clipTime = audioSource.time;
         audioSource.Stop();
         audioSource.clip = clips[currentClip];

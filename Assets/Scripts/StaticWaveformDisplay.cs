@@ -12,7 +12,7 @@ public class StaticWaveformDisplay : MonoBehaviour
     private float[] waveformMaxs;
     private Texture2D texture;
     private Sprite sprite;
-    public SpriteRenderer renderer;
+    public SpriteRenderer waveformRenderer;
     public Color color;
 
     public int width = 800;
@@ -22,7 +22,7 @@ public class StaticWaveformDisplay : MonoBehaviour
     void Start() {
         texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
         sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-        renderer.sprite = sprite;
+        waveformRenderer.sprite = sprite;
     }
 
     // Update is called once per frame
@@ -73,7 +73,7 @@ public class StaticWaveformDisplay : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                texture.SetPixel(x, y, Color.black);
+                texture.SetPixel(x, y, Color.clear);
             }
         }
 
