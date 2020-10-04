@@ -7,7 +7,7 @@ using Unity.Collections;
 public class ScrollingWaveformDisplay : MonoBehaviour {
     private float[] sampleCache;
     private int numChannels;
-    private int numSamples;
+    private int numSamples = 0;
     private Texture2D texture;
     private Sprite sprite;
     public SpriteRenderer waveformRenderer;
@@ -31,12 +31,17 @@ public class ScrollingWaveformDisplay : MonoBehaviour {
         texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
         sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         waveformRenderer.sprite = sprite;
+        SetColor(color);
+        transparent.a = 0;
+    }
 
+    public void SetColor(Color c) {
+        color = c;
         color32.r = (byte)Math.Round(color.r * 255.0);
         color32.g = (byte)Math.Round(color.g * 255.0);
         color32.b = (byte)Math.Round(color.b * 255.0);
         color32.a = (byte)Math.Round(color.a * 255.0);
-        transparent.a = 0;
+        generateCache();
     }
 
     // Update is called once per frame
@@ -55,6 +60,10 @@ public class ScrollingWaveformDisplay : MonoBehaviour {
     }
 
     private void generateCache() {
+        if (numSamples == 0) {
+            return;
+        }
+
         scaleFactor = numSamples / numVisibleSamples;
         internalWidth = (int)Math.Round(width * scaleFactor);
         internalHeight = height;

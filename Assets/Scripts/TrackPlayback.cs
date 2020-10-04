@@ -13,6 +13,8 @@ public class TrackPlayback : MonoBehaviour {
     public StaticWaveformDisplay correctStaticWaveform;
     public ScrollingWaveformDisplay correctScrollingWaveform;
 
+    public ScrollingWaveformDisplay thumbnail;
+
     private int currentClip = 0;
 
     bool selected = false;
@@ -37,6 +39,9 @@ public class TrackPlayback : MonoBehaviour {
 
         currentScrollingWaveform.updateTexture(audioSource.timeSamples);
         correctScrollingWaveform.updateTexture(audioSource.timeSamples);
+        if (thumbnail) {
+            thumbnail.updateTexture(audioSource.timeSamples);
+        }
     }
 
     private void PlayClip(int clip) {
@@ -44,6 +49,9 @@ public class TrackPlayback : MonoBehaviour {
 
         currentStaticWaveform.SetClip(clips[currentClip]);
         currentScrollingWaveform.SetClip(clips[currentClip]);
+        if (thumbnail) {
+            thumbnail.SetClip(clips[currentClip]);
+        }
         float clipTime = audioSource.time;
         audioSource.Stop();
         audioSource.clip = clips[currentClip];
