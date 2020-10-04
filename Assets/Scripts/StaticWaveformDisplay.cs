@@ -6,14 +6,23 @@ using System;
 public class StaticWaveformDisplay : MonoBehaviour
 {
     private float[] sampleCache;
+    private int numChannels;
+    private int numSamples;
     private float[] waveformMins;
     private float[] waveformMaxs;
-    public Texture2D texture;
+    private Texture2D texture;
+    private Sprite sprite;
+    public SpriteRenderer renderer;
     public Color color;
+
+    public int width = 800;
+    public int height = 500;
 
     // Start is called before the first frame update
     void Start() {
-        
+        texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
+        sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        renderer.sprite = sprite;
     }
 
     // Update is called once per frame
@@ -22,41 +31,43 @@ public class StaticWaveformDisplay : MonoBehaviour
     }
 
     public void SetClip(AudioClip clip) {
-        sampleCache = new float[clip.samples];
+        numSamples = clip.samples;
+        numChannels = clip.channels;
+
+        sampleCache = new float[clip.samples * clip.channels];
         waveformMins = new float[texture.width];
         waveformMaxs = new float[texture.width];
         clip.GetData(sampleCache, 0);
 
-        float samplesPerPixel = (float)clip.samples / (float)texture.width;
-        int samplesPerPixelRound = (int)Math.Round(samplesPerPixel);
-        float sampleIndexFloat = 0.0f;
+        updateTexture();
+    }
 
-        for (int i = 0; i < texture.width; i++) {
+    public void updateTexture(float startSample = 0.0f, float numVisibleSamples = -1.0f) {
+        float visible = numVisibleSamples > 0.0f ? numVisibleSamples : (float)numSamples;
+        float samplesPerPixel = (float)visible / (float)texture.width;
+        int samplesPerPixelRound = (int)Math.Round(samplesPerPixel);
+        float sampleIndexFloat = startSample;
+
+        for (int i = 0; i < texture.width; i++)
+        {
             int sampleIndex = (int)Math.Round(sampleIndexFloat);
-            for (int innerSample = 0; innerSample < samplesPerPixelRound && sampleIndex + innerSample < clip.samples; innerSample++)
+            for (int innerSample = 0; innerSample < samplesPerPixelRound; innerSample++)
             {
-                int sample = (sampleIndex + innerSample) * clip.channels;
+                int sample = ((sampleIndex + innerSample) % numSamples) * numChannels;
 
                 // average value for stereo clips
                 float sampleValue = 0.0f;
-                for (int c = 0; c < clip.channels; c++)
+                for (int c = 0; c < numChannels; c++)
                 {
                     sampleValue += sampleCache[sample + c];
                 }
-                sampleValue /= clip.channels;
+                sampleValue /= numChannels;
 
                 waveformMins[i] = Math.Min(waveformMins[i], sampleValue);
                 waveformMaxs[i] = Math.Max(waveformMaxs[i], sampleValue);
             }
             sampleIndexFloat += samplesPerPixel;
         }
-
-        updateTexture();
-    }
-
-    void updateTexture() {
-        int width = texture.width;
-        int height = texture.height;
 
         for (int x = 0; x < width; x++)
         {
@@ -66,14 +77,15 @@ public class StaticWaveformDisplay : MonoBehaviour
             }
         }
 
-        /*for (int x = 0; x < waveformCache.Length; x++)
+        for (int x = 0; x < waveformMins.Length; x++)
         {
-            for (int y = 0; y <= waveformCache[x] * ((float)height * .75f); y++)
+            int min = (int)Math.Round(waveformMins[x] * height / 2) + height / 2;
+            int max = (int)Math.Round(waveformMaxs[x] * height / 2) + height / 2;
+            for (int y = min; y <= max; y++)
             {
-                texture.SetPixel(x, (height / 2) + y, color);
-                texture.SetPixel(x, (height / 2) - y, color);
+                texture.SetPixel(x, y, color);
             }
-        }*/
-        texture.Apply();
+        }
+        texture.Apply(false);
     }
 }

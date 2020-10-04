@@ -12,9 +12,11 @@ public class TrackPlayback : MonoBehaviour {
 
     private int currentClip = 0;
 
+    //float numVisibleSamples = 4285.0f;
+
     // Start is called before the first frame update
     void Start() {
-        
+        PlayClip(0);
     }
 
     // Update is called once per frame
@@ -24,6 +26,8 @@ public class TrackPlayback : MonoBehaviour {
         } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
             PlayClip(currentClip == clips.Length - 1 ? 0 : currentClip + 1);
         }
+
+        //staticWaveform.updateTexture(audioSource.time, numVisibleSamples);
     }
 
     private void PlayClip(int clip) {
