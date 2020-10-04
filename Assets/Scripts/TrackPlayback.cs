@@ -8,16 +8,18 @@ public class TrackPlayback : MonoBehaviour {
 
     public AudioSource audioSource;
 
-    public StaticWaveformDisplay staticWaveform;
-    public ScrollingWaveformDisplay scrollingWaveform;
+    public StaticWaveformDisplay currentStaticWaveform;
+    public ScrollingWaveformDisplay currentScrollingWaveform;
+    public StaticWaveformDisplay correctStaticWaveform;
+    public ScrollingWaveformDisplay correctScrollingWaveform;
 
     private int currentClip = 0;
-
-    //float numVisibleSamples = 4285.0f;
 
     // Start is called before the first frame update
     void Start() {
         PlayClip(0);
+        correctStaticWaveform.SetClip(correctClip);
+        correctScrollingWaveform.SetClip(correctClip);
     }
 
     // Update is called once per frame
@@ -28,14 +30,15 @@ public class TrackPlayback : MonoBehaviour {
             PlayClip(currentClip == clips.Length - 1 ? 0 : currentClip + 1);
         }
 
-        scrollingWaveform.updateTexture(audioSource.timeSamples);
+        currentScrollingWaveform.updateTexture(audioSource.timeSamples);
+        correctScrollingWaveform.updateTexture(audioSource.timeSamples);
     }
 
     private void PlayClip(int clip) {
         currentClip = clip;
 
-        staticWaveform.SetClip(clips[currentClip]);
-        scrollingWaveform.SetClip(clips[currentClip]);
+        currentStaticWaveform.SetClip(clips[currentClip]);
+        currentScrollingWaveform.SetClip(clips[currentClip]);
         float clipTime = audioSource.time;
         audioSource.Stop();
         audioSource.clip = clips[currentClip];
