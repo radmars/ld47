@@ -10,6 +10,8 @@ public class GlobalStateController : MonoBehaviour {
     public TrackPlayback[] tracks;
     public TrackThumbnail[] thumbnails;
 
+    public TextMesh stageText;
+
     void Awake() {
         stages.Add(new Stage(new TrackSpec[] {
             new TrackSpec(Track.Pad1, 2),
@@ -189,6 +191,7 @@ public class GlobalStateController : MonoBehaviour {
     }
 
     void SetStage(int stageIndex) {
+        stageText.text = "stage " + (stageIndex+1);
         Stage stage = stages[stageIndex];
         int index = 0;
         foreach (TrackPlayback i in tracks) {
