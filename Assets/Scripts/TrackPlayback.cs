@@ -6,7 +6,7 @@ public class TrackPlayback : MonoBehaviour {
     public AudioClip correctClip;
     public AudioClip[] clips;
 
-    public AudioSource audioSource;
+    private AudioSource[] audioSources;
 
     public StaticWaveformDisplay currentStaticWaveform;
     public ScrollingWaveformDisplay currentScrollingWaveform;
@@ -21,10 +21,20 @@ public class TrackPlayback : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        PlayClip(0);
         correctStaticWaveform.SetClip(correctClip);
         correctScrollingWaveform.SetClip(correctClip);
         SetSelected(false);
+
+        audioSources = new AudioSource[clips.Length];
+        for (int clipIndex = 0; clipIndex < clips.Length; clipIndex++) {
+            AudioSource source = gameObject.AddComponent<AudioSource>();
+            source.clip = clips[clipIndex];
+            source.loop = true;
+            audioSources[clipIndex] = source;
+            source.Play();
+        }
+
+        PlayClip(0);
     }
 
     // Update is called once per frame
@@ -37,10 +47,10 @@ public class TrackPlayback : MonoBehaviour {
             }
         }
 
-        currentScrollingWaveform.updateTexture(audioSource.timeSamples);
-        correctScrollingWaveform.updateTexture(audioSource.timeSamples);
+        currentScrollingWaveform.updateTexture(audioSources[currentClip].timeSamples);
+        correctScrollingWaveform.updateTexture(audioSources[currentClip].timeSamples);
         if (thumbnail) {
-            thumbnail.updateTexture(audioSource.timeSamples);
+            thumbnail.updateTexture(audioSources[currentClip].timeSamples);
         }
     }
 
@@ -52,11 +62,11 @@ public class TrackPlayback : MonoBehaviour {
         if (thumbnail) {
             thumbnail.SetClip(clips[currentClip]);
         }
-        float clipTime = audioSource.time;
-        audioSource.Stop();
-        audioSource.clip = clips[currentClip];
-        audioSource.time = clipTime;
-        audioSource.Play();
+        
+        foreach (AudioSource source in audioSources) {
+            source.mute = true;
+        }
+        audioSources[currentClip].mute = false;
     }
 
     public void SetSelected(bool s) {
