@@ -57,7 +57,7 @@ public class GlobalStateController : MonoBehaviour {
         stages.Add(new Stage(new TrackSpec[] {
             new TrackSpec(Track.Pad1, 2),
             new TrackSpec(Track.Pad2, 2),
-            new TrackSpec(Track.Bass, 8, 8),
+            new TrackSpec(Track.Bass, 8, 9),
             new TrackSpec(Track.Arp, 4),
             new TrackSpec(Track.Melody, 3),
             new TrackSpec(Track.Drums, 4),
@@ -66,7 +66,7 @@ public class GlobalStateController : MonoBehaviour {
         stages.Add(new Stage(new TrackSpec[] {
             new TrackSpec(Track.Pad1, 2),
             new TrackSpec(Track.Pad2, 2),
-            new TrackSpec(Track.Bass, 8, 8),
+            new TrackSpec(Track.Bass, 8, 9),
             new TrackSpec(Track.Arp, 4),
             new TrackSpec(Track.Melody, 3),
             new TrackSpec(Track.Drums, 4),
@@ -79,7 +79,7 @@ public class GlobalStateController : MonoBehaviour {
         stages.Add(new Stage(new TrackSpec[] {
             new TrackSpec(Track.Pad1, 2),
             new TrackSpec(Track.Pad2, 0),
-            new TrackSpec(Track.Bass, 8, 8),
+            new TrackSpec(Track.Bass, 8, 9),
             new TrackSpec(Track.Arp, 4),
             new TrackSpec(Track.Melody, 3),
             new TrackSpec(Track.Drums, 2),

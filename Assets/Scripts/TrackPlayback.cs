@@ -73,20 +73,15 @@ public class TrackPlayback : MonoBehaviour {
     }
 
     void DecrementClip() {
-        int targetClip = currentClip == 0 ? clips.Length - 1 : currentClip - 1;
-        PlayClip(ClampClipSelection(targetClip));
+        int max = maxClipIndex > -1 ? maxClipIndex : clips.Length - 1;
+        int targetClip = currentClip == 0 ? max : currentClip - 1;
+        PlayClip(targetClip);
     }
 
     void IncrementClip() {
-        int targetClip = currentClip == clips.Length - 1 ? 0 : currentClip + 1;
-        PlayClip(ClampClipSelection(targetClip));
-    }
-
-    int ClampClipSelection(int i) {
-        if (maxClipIndex > -1 && i > maxClipIndex) {
-            return maxClipIndex;
-        }
-        return i;
+        int max = maxClipIndex > -1 ? maxClipIndex : clips.Length - 1;
+        int targetClip = currentClip == max ? 0 : currentClip + 1;
+        PlayClip(targetClip);
     }
 
     public void PlayClip(int clip) {
