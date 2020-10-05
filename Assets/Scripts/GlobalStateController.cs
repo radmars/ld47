@@ -14,11 +14,11 @@ public class GlobalStateController : MonoBehaviour {
 
     void Awake() {
         stages.Add(new Stage(new TrackSpec[] {
-            new TrackSpec(Track.Pad1, 2),
+            new TrackSpec(Track.Bass, 3, 4),
         }));
         stages.Add(new Stage(new TrackSpec[] {
             new TrackSpec(Track.Pad1, 2),
-            new TrackSpec(Track.Pad2, 2),
+            new TrackSpec(Track.Bass, 3, 4),
         }));
         stages.Add(new Stage(new TrackSpec[] {
             new TrackSpec(Track.Pad1, 2),

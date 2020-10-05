@@ -806,7 +806,7 @@ PrefabInstance:
     - target: {fileID: 4379171399358404473, guid: 042647ba961f76343b5b315b721fb1b1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4379171399358404473, guid: 042647ba961f76343b5b315b721fb1b1,
         type: 3}
@@ -897,18 +897,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tracks:
+  - {fileID: 1928865031}
   - {fileID: 1583746837}
   - {fileID: 576083828}
-  - {fileID: 1928865031}
   - {fileID: 1093074076}
   - {fileID: 7802540}
   - {fileID: 1938746601}
   - {fileID: 313939222}
   - {fileID: 1825422349}
   thumbnails:
+  - {fileID: 1131874116}
   - {fileID: 1717104354}
   - {fileID: 1791008752}
-  - {fileID: 1131874116}
   - {fileID: 1324885085}
   - {fileID: 1939895195}
   - {fileID: 228128600}
@@ -1398,7 +1398,7 @@ PrefabInstance:
     - target: {fileID: 4379171399358404473, guid: 042647ba961f76343b5b315b721fb1b1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4379171399358404473, guid: 042647ba961f76343b5b315b721fb1b1,
         type: 3}
@@ -1972,7 +1972,7 @@ PrefabInstance:
     - target: {fileID: 4379171399358404473, guid: 042647ba961f76343b5b315b721fb1b1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4379171399358404473, guid: 042647ba961f76343b5b315b721fb1b1,
         type: 3}
