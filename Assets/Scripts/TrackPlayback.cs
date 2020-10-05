@@ -9,9 +9,7 @@ public class TrackPlayback : MonoBehaviour {
 
     private AudioSource[] audioSources;
 
-    public StaticWaveformDisplay currentStaticWaveform;
     public ScrollingWaveformDisplay currentScrollingWaveform;
-    public StaticWaveformDisplay correctStaticWaveform;
     public ScrollingWaveformDisplay correctScrollingWaveform;
 
     public ScrollingWaveformDisplay thumbnail;
@@ -96,7 +94,6 @@ public class TrackPlayback : MonoBehaviour {
     public void PlayClip(int clip) {
         currentClip = clip;
 
-        currentStaticWaveform.SetClip(clips[currentClip]);
         currentScrollingWaveform.SetClip(clips[currentClip]);
         if (thumbnail) {
             thumbnail.SetClip(clips[currentClip]);
@@ -110,15 +107,12 @@ public class TrackPlayback : MonoBehaviour {
 
     public void SetSelected(bool s) {
         selected = s;
-        currentStaticWaveform.waveformRenderer.enabled = s;
         currentScrollingWaveform.waveformRenderer.enabled = s;
-        correctStaticWaveform.waveformRenderer.enabled = s;
         correctScrollingWaveform.waveformRenderer.enabled = s;
     }
 
     public void SetCorrectClip(int i) {
         correctClip = i;
-        correctStaticWaveform.SetClip(clips[i]);
         correctScrollingWaveform.SetClip(clips[i]);
     }
 
