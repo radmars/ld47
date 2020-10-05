@@ -47,7 +47,6 @@ public class GlobalStateController : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.DownArrow)) {
             tracks[selectedTrack].SetSelected(false);
             thumbnails[selectedTrack].SetSelected(false);
-            selectedTrack = ++selectedTrack % tracks.Length;
             do {
                 selectedTrack = ++selectedTrack % tracks.Length;
             } while (tracks[selectedTrack].IsLocked());
