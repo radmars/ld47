@@ -56,9 +56,9 @@ public class TrackPlayback : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (selected) {
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) {
                 DecrementClip();
-            } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+            } else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) {
                 IncrementClip();
             }
         }

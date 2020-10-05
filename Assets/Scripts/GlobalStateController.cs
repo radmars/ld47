@@ -137,7 +137,7 @@ public class GlobalStateController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) {
             tracks[selectedTrack].SetSelected(false);
             thumbnails[selectedTrack].SetSelected(false);
             do {
@@ -150,7 +150,7 @@ public class GlobalStateController : MonoBehaviour {
             tracks[selectedTrack].SetSelected(true);
             thumbnails[selectedTrack].SetSelected(true);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) {
             tracks[selectedTrack].SetSelected(false);
             thumbnails[selectedTrack].SetSelected(false);
             do {
@@ -164,6 +164,8 @@ public class GlobalStateController : MonoBehaviour {
             if (StageComplete()) {
                 NextStage();
             }
+        } else if (Input.GetKeyDown(KeyCode.Escape)) {
+            Application.Quit();
         }
     }
 
