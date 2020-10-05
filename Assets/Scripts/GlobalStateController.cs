@@ -161,19 +161,24 @@ public class GlobalStateController : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.Space)) {
             NextStage();
         }
-
-        if (StageComplete()) {
-            NextStage();
-        }
     }
 
+    // Checks if stage is complete (ie: all tracks are correct), also sets track thumbnail state for correctness
     bool StageComplete() {
+        bool complete = true;
+
+        int thumb = 0;
         foreach (TrackPlayback i in tracks) {
             if (!i.CorrectClipSelected()) {
-                return false;
+                complete = false;
+                thumbnails[thumb].SetCorrectnessState(TrackThumbnail.CorrectnessState.Wrong);
+            } else {
+                thumbnails[thumb].SetCorrectnessState(TrackThumbnail.CorrectnessState.Correct);
             }
+            thumb++;
         }
-        return true;
+
+        return complete;
     }
 
     void NextStage() {
@@ -182,6 +187,10 @@ public class GlobalStateController : MonoBehaviour {
     }
 
     void SetStage(int stageIndex) {
+        foreach (TrackThumbnail thumb in thumbnails) {
+            thumb.SetCorrectnessState(TrackThumbnail.CorrectnessState.Unknown);
+        }
+
         Stage stage = stages[stageIndex];
         foreach (TrackPlayback i in tracks) {
             bool trackInLevel = false;
@@ -198,7 +207,6 @@ public class GlobalStateController : MonoBehaviour {
 
             if (!trackInLevel) {
                 i.Lock();
-                i.SetClip(0); // Silent track
             }
         }
     }

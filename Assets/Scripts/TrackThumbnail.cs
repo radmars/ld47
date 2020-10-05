@@ -21,15 +21,16 @@ public class TrackThumbnail : MonoBehaviour {
     void Awake() {
         // Needs to happen before GlobalStateContoller sets this to "true" for the appropriate track.
         SetSelected(false);
-    }
-
-    // Start is called before the first frame update
-    void Start() {
         stateColors = new Color[3];
         stateColors[(int)CorrectnessState.Unknown] = unknown;
         stateColors[(int)CorrectnessState.Wrong] = wrong;
         stateColors[(int)CorrectnessState.Correct] = correct;
         SetCorrectnessState(CorrectnessState.Unknown);
+    }
+
+    // Start is called before the first frame update
+    void Start() {
+        
     }
 
     // Update is called once per frame
