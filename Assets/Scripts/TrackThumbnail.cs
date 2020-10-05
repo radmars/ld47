@@ -35,15 +35,7 @@ public class TrackThumbnail : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            SetActive(!waveform.waveformRenderer.enabled);
-        } else if (Input.GetKeyDown(KeyCode.A)) {
-            SetCorrectnessState(CorrectnessState.Unknown);
-        } else if (Input.GetKeyDown(KeyCode.S)) {
-            SetCorrectnessState(CorrectnessState.Wrong);
-        } else if (Input.GetKeyDown(KeyCode.D)) {
-            SetCorrectnessState(CorrectnessState.Correct);
-        }
+
     }
 
     public void SetCorrectnessState(CorrectnessState s) {

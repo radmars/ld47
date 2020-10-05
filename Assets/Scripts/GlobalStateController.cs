@@ -159,7 +159,9 @@ public class GlobalStateController : MonoBehaviour {
             thumbnails[selectedTrack].SetSelected(true);
         }
         else if (Input.GetKeyDown(KeyCode.Space)) {
-            NextStage();
+            if (StageComplete()) {
+                NextStage();
+            }
         }
     }
 
@@ -187,18 +189,18 @@ public class GlobalStateController : MonoBehaviour {
     }
 
     void SetStage(int stageIndex) {
-        foreach (TrackThumbnail thumb in thumbnails) {
-            thumb.SetCorrectnessState(TrackThumbnail.CorrectnessState.Unknown);
-        }
-
         Stage stage = stages[stageIndex];
+        int index = 0;
         foreach (TrackPlayback i in tracks) {
+            thumbnails[index].SetCorrectnessState(TrackThumbnail.CorrectnessState.Unknown);
+
             bool trackInLevel = false;
             // Should be using a Dictionary for one or the other as an optimization.
             foreach (TrackSpec j in stage.tracks) {
                 if (i.track == j.track) {
                     trackInLevel = true;
                     i.Unlock();
+                    thumbnails[index].SetActive(true);
                     i.SetCorrectClip(j.correctClip);
                     i.maxClipIndex = j.maxClipIndex;
                     break;
@@ -206,8 +208,21 @@ public class GlobalStateController : MonoBehaviour {
             }
 
             if (!trackInLevel) {
+                thumbnails[index].SetActive(false);
                 i.Lock();
+
+                // try to make sure selection isn't selecting a locked track
+                if (selectedTrack == index) {
+                    i.SetSelected(false);
+                    thumbnails[index].SetSelected(false);
+                    while (tracks[selectedTrack].IsLocked()) {
+                        selectedTrack = (selectedTrack + 1) % tracks.Length;
+                    }
+                    tracks[selectedTrack].SetSelected(true);
+                    thumbnails[selectedTrack].SetSelected(true);
+                }
             }
+            index++;
         }
     }
 }
