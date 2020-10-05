@@ -198,7 +198,7 @@ public class GlobalStateController : MonoBehaviour {
 
             if (!trackInLevel) {
                 i.Lock();
-                i.SetClip(0); // Silent track
+                i.PlayClip(0); // Silent track
             }
         }
     }
