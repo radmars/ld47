@@ -213,8 +213,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618e05600613c5044a2757f6f72e3843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  correctClip: {fileID: 0}
+  track: 0
   clips: []
+  maxClipIndex: -1
   currentStaticWaveform: {fileID: 7483002822366661512}
   currentScrollingWaveform: {fileID: 7483002822366661511}
   correctStaticWaveform: {fileID: 7483002822366661509}
