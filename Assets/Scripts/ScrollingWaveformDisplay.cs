@@ -28,6 +28,8 @@ public class ScrollingWaveformDisplay : MonoBehaviour {
 
     public float gain = 1.0f;
 
+    private AudioClip lastClip;
+
     // Start is called before the first frame update
     void Start() {
         texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
@@ -52,13 +54,17 @@ public class ScrollingWaveformDisplay : MonoBehaviour {
     }
 
     public void SetClip(AudioClip clip) {
-        numSamples = clip.samples;
-        numChannels = clip.channels;
+        if (clip != lastClip) {
+            lastClip = clip;
 
-        sampleCache = new float[clip.samples * clip.channels];
-        clip.GetData(sampleCache, 0);
+            numSamples = clip.samples;
+            numChannels = clip.channels;
 
-        generateCache();
+            sampleCache = new float[clip.samples * clip.channels];
+            clip.GetData(sampleCache, 0);
+
+            generateCache();
+        }
     }
 
     private void generateCache() {
