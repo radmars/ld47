@@ -19,12 +19,14 @@ public class ScrollingWaveformDisplay : MonoBehaviour {
     private int internalWidth;
     private int internalHeight;
     private Color32[] internalTexture;
-    private float numVisibleSamples = 4285.0f; // MAGIC NUMBER! samples of 1/32 note at 84bpm at 48kHz
+    public float numVisibleSamples = 4285.0f; // MAGIC NUMBER! samples of 1/32 note at 84bpm at 48kHz
     private float scaleFactor; // ratio of visible samples to total samples
     private float samplesPerPixel;
 
     private Color32 color32;
     private Color32 transparent;
+
+    public float gain = 1.0f;
 
     // Start is called before the first frame update
     void Start() {
@@ -87,7 +89,7 @@ public class ScrollingWaveformDisplay : MonoBehaviour {
                 float sampleValue = 0.0f;
                 for (int c = 0; c < numChannels; c++)
                 {
-                    sampleValue += sampleCache[sample + c];
+                    sampleValue += sampleCache[sample + c] * gain;
                 }
                 sampleValue /= numChannels;
 

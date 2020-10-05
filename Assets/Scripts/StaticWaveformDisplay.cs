@@ -15,6 +15,8 @@ public class StaticWaveformDisplay : MonoBehaviour
     public SpriteRenderer waveformRenderer;
     public Color color;
 
+    public AudioClip lastClip;
+
     public int width = 800;
     public int height = 500;
 
@@ -31,15 +33,19 @@ public class StaticWaveformDisplay : MonoBehaviour
     }
 
     public void SetClip(AudioClip clip) {
-        numSamples = clip.samples;
-        numChannels = clip.channels;
+        if (clip != lastClip) {
+            numSamples = clip.samples;
+            numChannels = clip.channels;
 
-        sampleCache = new float[clip.samples * clip.channels];
-        waveformMins = new float[texture.width];
-        waveformMaxs = new float[texture.width];
-        clip.GetData(sampleCache, 0);
+            sampleCache = new float[clip.samples * clip.channels];
+            waveformMins = new float[texture.width];
+            waveformMaxs = new float[texture.width];
+            clip.GetData(sampleCache, 0);
 
-        updateTexture();
+            updateTexture();
+        }
+
+        lastClip = clip;
     }
 
     public void updateTexture(float startSample = 0.0f, float numVisibleSamples = -1.0f) {

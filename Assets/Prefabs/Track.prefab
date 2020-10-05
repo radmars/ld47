@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 7483002822366661516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children:
   - {fileID: 7483002822068497207}
   - {fileID: 7483002822625412650}
@@ -147,9 +147,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveformRenderer: {fileID: 7483002822068497208}
-  color: {r: 0.75686276, g: 1, b: 0, a: 0.5019608}
+  color: {r: 0.015686268, g: 0.89411765, b: 0.1524842, a: 0.78039217}
   width: 400
   height: 300
+  numVisibleSamples: 4285
+  gain: 1
 --- !u!114 &7483002822366661510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,6 +168,8 @@ MonoBehaviour:
   color: {r: 0, g: 0.5803922, b: 0.74509805, a: 0.5019608}
   width: 400
   height: 300
+  numVisibleSamples: 4285
+  gain: 1
 --- !u!1 &7483002822625412652
 GameObject:
   m_ObjectHideFlags: 0

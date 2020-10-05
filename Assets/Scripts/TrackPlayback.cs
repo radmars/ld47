@@ -63,10 +63,12 @@ public class TrackPlayback : MonoBehaviour {
             }
         }
 
-        currentScrollingWaveform.updateTexture(audioSources[currentClip].timeSamples);
-        correctScrollingWaveform.updateTexture(audioSources[currentClip].timeSamples);
+        int samples = audioSources[currentClip].timeSamples;
+
+        currentScrollingWaveform.updateTexture(samples);
+        correctScrollingWaveform.updateTexture(samples);
         if (thumbnail) {
-            thumbnail.updateTexture(audioSources[currentClip].timeSamples);
+            thumbnail.updateTexture(samples);
         }
     }
 
