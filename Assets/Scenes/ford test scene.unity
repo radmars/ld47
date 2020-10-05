@@ -247,18 +247,18 @@ PrefabInstance:
     - target: {fileID: 7483002822366661514, guid: ad9bc39529e565a42a0a81d4a5e1e89b,
         type: 3}
       propertyPath: clips.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7483002822366661514, guid: ad9bc39529e565a42a0a81d4a5e1e89b,
         type: 3}
       propertyPath: clips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: a039451619faf3a489660f1b0e5f7415, type: 3}
+      objectReference: {fileID: 8300000, guid: 9136ac1871826a143a6c6e07a6c6aba5, type: 3}
     - target: {fileID: 7483002822366661514, guid: ad9bc39529e565a42a0a81d4a5e1e89b,
         type: 3}
       propertyPath: clips.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: edd4db27ece51f344834f1866c3aee13, type: 3}
+      objectReference: {fileID: 8300000, guid: a039451619faf3a489660f1b0e5f7415, type: 3}
     - target: {fileID: 7483002822366661514, guid: ad9bc39529e565a42a0a81d4a5e1e89b,
         type: 3}
       propertyPath: correctClip
@@ -269,6 +269,16 @@ PrefabInstance:
       propertyPath: thumbnail
       value: 
       objectReference: {fileID: 904635827}
+    - target: {fileID: 7483002822366661514, guid: ad9bc39529e565a42a0a81d4a5e1e89b,
+        type: 3}
+      propertyPath: track
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483002822366661514, guid: ad9bc39529e565a42a0a81d4a5e1e89b,
+        type: 3}
+      propertyPath: clips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: edd4db27ece51f344834f1866c3aee13, type: 3}
     - target: {fileID: 7483002822366661516, guid: ad9bc39529e565a42a0a81d4a5e1e89b,
         type: 3}
       propertyPath: m_Name
@@ -352,7 +362,7 @@ PrefabInstance:
         type: 3}
       propertyPath: clips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: e34502ec58c072d4999d8f9d57e8e444, type: 3}
+      objectReference: {fileID: 8300000, guid: 9136ac1871826a143a6c6e07a6c6aba5, type: 3}
     - target: {fileID: 7483002822366661514, guid: ad9bc39529e565a42a0a81d4a5e1e89b,
         type: 3}
       propertyPath: clips.Array.data[1]
@@ -372,12 +382,17 @@ PrefabInstance:
         type: 3}
       propertyPath: clips.Array.data[4]
       value: 
-      objectReference: {fileID: 8300000, guid: 9136ac1871826a143a6c6e07a6c6aba5, type: 3}
+      objectReference: {fileID: 8300000, guid: e34502ec58c072d4999d8f9d57e8e444, type: 3}
     - target: {fileID: 7483002822366661514, guid: ad9bc39529e565a42a0a81d4a5e1e89b,
         type: 3}
       propertyPath: thumbnail
       value: 
       objectReference: {fileID: 959068733}
+    - target: {fileID: 7483002822366661514, guid: ad9bc39529e565a42a0a81d4a5e1e89b,
+        type: 3}
+      propertyPath: track
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7483002822366661516, guid: ad9bc39529e565a42a0a81d4a5e1e89b,
         type: 3}
       propertyPath: m_Name
