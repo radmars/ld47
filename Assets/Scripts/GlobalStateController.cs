@@ -10,20 +10,124 @@ public class GlobalStateController : MonoBehaviour {
     public TrackPlayback[] tracks;
     public TrackThumbnail[] thumbnails;
 
+    void Awake() {
+        stages.Add(new Stage(new TrackSpec[] {
+            new TrackSpec(Track.Pad1, 2),
+        }));
+        stages.Add(new Stage(new TrackSpec[] {
+            new TrackSpec(Track.Pad1, 2),
+            new TrackSpec(Track.Pad2, 2),
+        }));
+        stages.Add(new Stage(new TrackSpec[] {
+            new TrackSpec(Track.Pad1, 2),
+            new TrackSpec(Track.Pad2, 2),
+            new TrackSpec(Track.Bass, 3, 4),
+        }));
+        stages.Add(new Stage(new TrackSpec[] {
+            new TrackSpec(Track.Pad1, 2),
+            new TrackSpec(Track.Pad2, 2),
+            new TrackSpec(Track.Bass, 3, 4),
+            new TrackSpec(Track.Arp, 4),
+        }));
+        stages.Add(new Stage(new TrackSpec[] {
+            new TrackSpec(Track.Pad1, 2),
+            new TrackSpec(Track.Pad2, 2),
+            new TrackSpec(Track.Bass, 3, 4),
+            new TrackSpec(Track.Arp, 4),
+            new TrackSpec(Track.Melody, 3),
+        }));
+        stages.Add(new Stage(new TrackSpec[] {
+            new TrackSpec(Track.Pad1, 2),
+            new TrackSpec(Track.Pad2, 2),
+            new TrackSpec(Track.Bass, 3, 4),
+            new TrackSpec(Track.Arp, 4),
+            new TrackSpec(Track.Melody, 3),
+            new TrackSpec(Track.Drums, 4),
+        }));
+        // Bass options +more, bass answer -> correct2
+        stages.Add(new Stage(new TrackSpec[] {
+            new TrackSpec(Track.Pad1, 2),
+            new TrackSpec(Track.Pad2, 2),
+            new TrackSpec(Track.Bass, 7, 7),
+            new TrackSpec(Track.Arp, 4),
+            new TrackSpec(Track.Melody, 3),
+            new TrackSpec(Track.Drums, 4),
+        }));
+        // Bass options +more, bass answer -> correct3
+        stages.Add(new Stage(new TrackSpec[] {
+            new TrackSpec(Track.Pad1, 2),
+            new TrackSpec(Track.Pad2, 2),
+            new TrackSpec(Track.Bass, 8, 8),
+            new TrackSpec(Track.Arp, 4),
+            new TrackSpec(Track.Melody, 3),
+            new TrackSpec(Track.Drums, 4),
+            new TrackSpec(Track.Pad3, 2),
+        }));
+        stages.Add(new Stage(new TrackSpec[] {
+            new TrackSpec(Track.Pad1, 2),
+            new TrackSpec(Track.Pad2, 2),
+            new TrackSpec(Track.Bass, 8, 8),
+            new TrackSpec(Track.Arp, 4),
+            new TrackSpec(Track.Melody, 3),
+            new TrackSpec(Track.Drums, 4),
+            new TrackSpec(Track.Pad3, 2),
+            new TrackSpec(Track.Lead, 2),
+        }));
+        // Pad2 answer -> silence
+        // Drums answer -> correct2
+        // Lead answer -> silence
+        stages.Add(new Stage(new TrackSpec[] {
+            new TrackSpec(Track.Pad1, 2),
+            new TrackSpec(Track.Pad2, 0),
+            new TrackSpec(Track.Bass, 8, 8),
+            new TrackSpec(Track.Arp, 4),
+            new TrackSpec(Track.Melody, 3),
+            new TrackSpec(Track.Drums, 2),
+            new TrackSpec(Track.Pad3, 2),
+            new TrackSpec(Track.Lead, 0),
+        }));
+        // Lead answer -> silence
+        // Pad1 answer -> silence
+        // Pad3 answer -> silence
+        // Arp answer -> silence
+        // Drums answer -> silence
+        // Bass answer -> correct4
+        stages.Add(new Stage(new TrackSpec[] {
+            new TrackSpec(Track.Pad1, 0),
+            new TrackSpec(Track.Pad2, 0),
+            new TrackSpec(Track.Bass, 9, 9),
+            new TrackSpec(Track.Arp, 0),
+            new TrackSpec(Track.Melody, 3),
+            new TrackSpec(Track.Drums, 0),
+            new TrackSpec(Track.Pad3, 0),
+            new TrackSpec(Track.Lead, 0),
+        }));
+        // Bass answer -> silence
+        stages.Add(new Stage(new TrackSpec[] {
+            new TrackSpec(Track.Pad1, 0),
+            new TrackSpec(Track.Pad2, 0),
+            new TrackSpec(Track.Bass, 0),
+            new TrackSpec(Track.Arp, 0),
+            new TrackSpec(Track.Melody, 3),
+            new TrackSpec(Track.Drums, 0),
+            new TrackSpec(Track.Pad3, 0),
+            new TrackSpec(Track.Lead, 0),
+        }));
+        // Melody answer -> silence
+        stages.Add(new Stage(new TrackSpec[] {
+            new TrackSpec(Track.Pad1, 0),
+            new TrackSpec(Track.Pad2, 0),
+            new TrackSpec(Track.Bass, 0),
+            new TrackSpec(Track.Arp, 0),
+            new TrackSpec(Track.Melody, 0),
+            new TrackSpec(Track.Drums, 0),
+            new TrackSpec(Track.Pad3, 0),
+            new TrackSpec(Track.Lead, 0),
+        }));
+    }
+
     // Start is called before the first frame update
     void Start() {
-        stages.Add(new Stage(new TrackSpec[] {
-            new TrackSpec(Track.Drums, 1)
-        }));
-        stages.Add(new Stage(new TrackSpec[] {
-            new TrackSpec(Track.Arp, 1),
-            new TrackSpec(Track.Drums, 1)
-        }));
-        stages.Add(new Stage(new TrackSpec[] {
-            new TrackSpec(Track.Arp, 2),
-            new TrackSpec(Track.Drums, 1)
-        }));
-
         SetStage(currentStageIndex);
         tracks[selectedTrack].SetSelected(true);
         thumbnails[selectedTrack].SetSelected(true);
@@ -73,20 +177,28 @@ public class GlobalStateController : MonoBehaviour {
     }
 
     void NextStage() {
-        currentStageIndex++;
+        currentStageIndex = (currentStageIndex + 1) % stages.Count;
         SetStage(currentStageIndex);
     }
 
     void SetStage(int stageIndex) {
         Stage stage = stages[stageIndex];
-        foreach (TrackSpec i in stage.tracks) {
+        foreach (TrackPlayback i in tracks) {
+            bool trackInLevel = false;
             // Should be using a Dictionary for one or the other as an optimization.
-            foreach (TrackPlayback j in tracks) {
+            foreach (TrackSpec j in stage.tracks) {
                 if (i.track == j.track) {
-                    j.Unlock();
-                    j.SetCorrectClip(i.correctClip);
-                    j.maxClipIndex = i.maxClipIndex;
+                    trackInLevel = true;
+                    i.Unlock();
+                    i.SetCorrectClip(j.correctClip);
+                    i.maxClipIndex = j.maxClipIndex;
+                    break;
                 }
+            }
+
+            if (!trackInLevel) {
+                i.Lock();
+                i.SetClip(0); // Silent track
             }
         }
     }

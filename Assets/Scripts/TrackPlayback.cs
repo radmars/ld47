@@ -20,7 +20,7 @@ public class TrackPlayback : MonoBehaviour {
     private int correctClip;
 
     bool selected = false;
-    // Eligible for player control.
+    // Only unlocked tracks are eligible for player control.
     bool locked = true;
 
     public bool IsLocked() {
@@ -29,6 +29,10 @@ public class TrackPlayback : MonoBehaviour {
 
     public void Unlock() {
         locked = false;
+    }
+
+    public void Lock() {
+        locked = true;
     }
 
     // Awake() happens before the Start() of any game object.
@@ -69,14 +73,12 @@ public class TrackPlayback : MonoBehaviour {
 
     void DecrementClip() {
         int targetClip = currentClip == 0 ? clips.Length - 1 : currentClip - 1;
-        currentClip = ClampClipSelection(targetClip);
-        PlayClip(currentClip);
+        SetClip(ClampClipSelection(targetClip));
     }
 
     void IncrementClip() {
         int targetClip = currentClip == clips.Length - 1 ? 0 : currentClip + 1;
-        currentClip = ClampClipSelection(targetClip);
-        PlayClip(currentClip);
+        SetClip(ClampClipSelection(targetClip));
     }
 
     int ClampClipSelection(int i) {
@@ -84,6 +86,11 @@ public class TrackPlayback : MonoBehaviour {
             return maxClipIndex;
         }
         return i;
+    }
+
+    public void SetClip(int clip) {
+        currentClip = clip;
+        PlayClip(currentClip);
     }
 
     private void PlayClip(int clip) {
