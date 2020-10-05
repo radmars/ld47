@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveformRenderer: {fileID: 7483002822068497208}
-  color: {r: 0.015686268, g: 0.89411765, b: 0.1524842, a: 0.78039217}
+  color: {r: 0, g: 0.8396226, b: 0.13119103, a: 0.6862745}
   width: 400
   height: 300
   numVisibleSamples: 4285
