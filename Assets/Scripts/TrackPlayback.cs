@@ -72,16 +72,25 @@ public class TrackPlayback : MonoBehaviour {
         }
     }
 
+    void ClearThumbnailCorrectness() {
+        TrackThumbnail thumb = thumbnail.GetComponentInParent<TrackThumbnail>();
+        if (thumb) {
+            thumb.SetCorrectnessState(TrackThumbnail.CorrectnessState.Unknown);
+        }
+    }
+
     void DecrementClip() {
         int max = maxClipIndex > -1 ? maxClipIndex : clips.Length - 1;
         int targetClip = currentClip == 0 ? max : currentClip - 1;
         PlayClip(targetClip);
+        ClearThumbnailCorrectness();
     }
 
     void IncrementClip() {
         int max = maxClipIndex > -1 ? maxClipIndex : clips.Length - 1;
         int targetClip = currentClip == max ? 0 : currentClip + 1;
         PlayClip(targetClip);
+        ClearThumbnailCorrectness();
     }
 
     public void PlayClip(int clip) {
