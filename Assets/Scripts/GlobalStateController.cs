@@ -221,6 +221,8 @@ public class GlobalStateController : MonoBehaviour {
                     tracks[selectedTrack].SetSelected(true);
                     thumbnails[selectedTrack].SetSelected(true);
                 }
+
+                i.PlayClip(0); // Silent track
             }
             index++;
         }

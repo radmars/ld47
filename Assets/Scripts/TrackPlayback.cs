@@ -39,10 +39,7 @@ public class TrackPlayback : MonoBehaviour {
     void Awake() {
         // Needs to happen before GlobalStateContoller sets this to "true" for the appropriate track.
         SetSelected(false);
-    }
 
-    // Start is called before the first frame update
-    void Start() {
         audioSources = new AudioSource[clips.Length];
         for (int clipIndex = 0; clipIndex < clips.Length; clipIndex++) {
             AudioSource source = gameObject.AddComponent<AudioSource>();
@@ -51,6 +48,10 @@ public class TrackPlayback : MonoBehaviour {
             audioSources[clipIndex] = source;
             source.Play();
         }
+    }
+
+    // Start is called before the first frame update
+    void Start() {
         PlayClip(0);
     }
 
@@ -73,12 +74,12 @@ public class TrackPlayback : MonoBehaviour {
 
     void DecrementClip() {
         int targetClip = currentClip == 0 ? clips.Length - 1 : currentClip - 1;
-        SetClip(ClampClipSelection(targetClip));
+        PlayClip(ClampClipSelection(targetClip));
     }
 
     void IncrementClip() {
         int targetClip = currentClip == clips.Length - 1 ? 0 : currentClip + 1;
-        SetClip(ClampClipSelection(targetClip));
+        PlayClip(ClampClipSelection(targetClip));
     }
 
     int ClampClipSelection(int i) {
@@ -88,12 +89,7 @@ public class TrackPlayback : MonoBehaviour {
         return i;
     }
 
-    public void SetClip(int clip) {
-        currentClip = clip;
-        PlayClip(currentClip);
-    }
-
-    private void PlayClip(int clip) {
+    public void PlayClip(int clip) {
         currentClip = clip;
 
         currentStaticWaveform.SetClip(clips[currentClip]);
