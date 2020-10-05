@@ -17,13 +17,18 @@ public class TrackThumbnail : MonoBehaviour {
     public ScrollingWaveformDisplay waveform;
     public SpriteRenderer selection;
 
+    // Awake() happens before the Start() of any game object.
+    void Awake() {
+        // Needs to happen before GlobalStateContoller sets this to "true" for the appropriate track.
+        SetSelected(false);
+    }
+
     // Start is called before the first frame update
     void Start() {
         stateColors = new Color[3];
         stateColors[(int)CorrectnessState.Unknown] = unknown;
         stateColors[(int)CorrectnessState.Wrong] = wrong;
         stateColors[(int)CorrectnessState.Correct] = correct;
-        SetSelected(false);
         SetCorrectnessState(CorrectnessState.Unknown);
     }
 

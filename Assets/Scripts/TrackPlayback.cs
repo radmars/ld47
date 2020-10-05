@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TrackPlayback : MonoBehaviour {
-    public AudioClip correctClip;
+    public Track track;
     public AudioClip[] clips;
+    public int maxClipIndex;
 
     private AudioSource[] audioSources;
 
@@ -16,15 +17,28 @@ public class TrackPlayback : MonoBehaviour {
     public ScrollingWaveformDisplay thumbnail;
 
     private int currentClip = 0;
+    private int correctClip;
 
     bool selected = false;
+    // Eligible for player control.
+    bool locked = true;
+
+    public bool IsLocked() {
+        return locked;
+    }
+
+    public void Unlock() {
+        locked = false;
+    }
+
+    // Awake() happens before the Start() of any game object.
+    void Awake() {
+        // Needs to happen before GlobalStateContoller sets this to "true" for the appropriate track.
+        SetSelected(false);
+    }
 
     // Start is called before the first frame update
     void Start() {
-        correctStaticWaveform.SetClip(correctClip);
-        correctScrollingWaveform.SetClip(correctClip);
-        SetSelected(false);
-
         audioSources = new AudioSource[clips.Length];
         for (int clipIndex = 0; clipIndex < clips.Length; clipIndex++) {
             AudioSource source = gameObject.AddComponent<AudioSource>();
@@ -33,7 +47,6 @@ public class TrackPlayback : MonoBehaviour {
             audioSources[clipIndex] = source;
             source.Play();
         }
-
         PlayClip(0);
     }
 
@@ -41,9 +54,9 @@ public class TrackPlayback : MonoBehaviour {
     void Update() {
         if (selected) {
             if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-                PlayClip(currentClip == 0 ? clips.Length - 1 : currentClip - 1);
+                DecrementClip();
             } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-                PlayClip(currentClip == clips.Length - 1 ? 0 : currentClip + 1);
+                IncrementClip();
             }
         }
 
@@ -52,6 +65,25 @@ public class TrackPlayback : MonoBehaviour {
         if (thumbnail) {
             thumbnail.updateTexture(audioSources[currentClip].timeSamples);
         }
+    }
+
+    void DecrementClip() {
+        int targetClip = currentClip == 0 ? clips.Length - 1 : currentClip - 1;
+        currentClip = ClampClipSelection(targetClip);
+        PlayClip(currentClip);
+    }
+
+    void IncrementClip() {
+        int targetClip = currentClip == clips.Length - 1 ? 0 : currentClip + 1;
+        currentClip = ClampClipSelection(targetClip);
+        PlayClip(currentClip);
+    }
+
+    int ClampClipSelection(int i) {
+        if (maxClipIndex > -1 && i > maxClipIndex) {
+            return maxClipIndex;
+        }
+        return i;
     }
 
     private void PlayClip(int clip) {
@@ -75,5 +107,15 @@ public class TrackPlayback : MonoBehaviour {
         currentScrollingWaveform.waveformRenderer.enabled = s;
         correctStaticWaveform.waveformRenderer.enabled = s;
         correctScrollingWaveform.waveformRenderer.enabled = s;
+    }
+
+    public void SetCorrectClip(int i) {
+        correctClip = i;
+        correctStaticWaveform.SetClip(clips[i]);
+        correctScrollingWaveform.SetClip(clips[i]);
+    }
+
+    public bool CorrectClipSelected() {
+        return (currentClip == correctClip);
     }
 }
